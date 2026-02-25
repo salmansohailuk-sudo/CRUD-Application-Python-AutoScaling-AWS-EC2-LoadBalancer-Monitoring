@@ -170,6 +170,10 @@ Attach SG-Backend
 SSH via Bastion:
 
 ssh ec2-user@<backend-private-ip>
+
+
+==========================================================================
+
 🚀 BACKEND INSTALLATION
 sudo yum update -y
 sudo yum install python3 -y
@@ -179,14 +183,8 @@ Create app folder:
 
 mkdir app
 cd app
-nano app.py
+vi app.py
 🧩 BACKEND CODE
-
-export DB_HOST=database-2.ca3m82g209lz.us-east-1.rds.amazonaws.com
-export DB_USER=admin
-export DB_PASS=Cloud123
-export DB_NAME=te
-
 
 from flask import Flask, request, jsonify
 import pymysql, os
@@ -268,14 +266,17 @@ CREATE TABLE users (
 🚀 RUN BACKEND
 gunicorn -w 4 -b 0.0.0.0:8000 app:app
 
-Test:
+
+
+=============================================================
+****Front End**
 
 curl http://localhost:8000/users
 🚀 PART 6 — FRONTEND EC2 (Private)
 
 Launch EC2:
 
-Private subnet 10.0.3.0/24
+Private subnet 10.0.0/24
 
 Attach SG-Frontend
 
