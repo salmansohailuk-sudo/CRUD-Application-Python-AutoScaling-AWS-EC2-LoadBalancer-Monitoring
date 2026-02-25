@@ -2,9 +2,7 @@
 
 🚀 PART 6 — FRONTEND EC2 (Private)
 
-Launch EC2:
-Private subnet 10.0.3.0/24
-Attach SG-Frontend
+Launch Front End EC2:
 
 SSH via Bastion AND connect to FRONT END SERVER.
 
@@ -252,27 +250,6 @@ Front EC2
 
   🚀 ADD REVERSE PROXY
 sudo vi /etc/nginx/conf.d/app.conf
-server {
-    listen 80;
-
-    # Serve frontend static files
-    location / {
-        root /usr/share/nginx/html;
-        index index.html;
-        try_files $uri $uri/ =404;
-    }
-
-    # Reverse proxy to backend 
-    location /api/ {
-        proxy_pass http://YOUR BACKEND SERVER-IP:8000/;
-        proxy_http_version 1.1;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-}
-
 
 Final Step - Restart:
 
