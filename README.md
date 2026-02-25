@@ -1,14 +1,15 @@
 
 
-<img width="1067" height="699" alt="0_PmFO57vSjFlmCNsX" src="https://github.com/user-attachments/assets/dc5c8497-e68a-4926-ae36-4466bae94482" />
-
-
 # CRUD-Application-Python-AutoScaling-AWS-EC2-LoadBalancer-Monitoring
 
-a production-grade Flask CRUD application on EC2 instances behind an Application Load Balancer. The app runs with Gunicorn, Nginx acts as a reverse proxy, RDS MySQL stores persistent data, and Auto Scaling ensures high availability and scalability.
+a production-grade Flask CRUD application on EC2 instances behind an Application Load Balancer. The app runs with Gunicorn, Nginx acts as a reverse proxy, RDS 
 
-ARCHITECTURE
-4
+MySQL stores persistent data, and Auto Scaling ensures high availability and scalability.
+
+**ARCHITECTURE**
+<img width="1041" height="995" alt="roundtrip" src="https://github.com/user-attachments/assets/a68043e0-2450-4b66-8376-a83c8cac0bc8" />
+
+
 Traffic Flow
 
 User
