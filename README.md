@@ -216,29 +216,40 @@ Browser → ALB → Frontend → Nginx /api → Backend → RDS
 No private IP exposed.
 
 
-**learnings:**
+**Knowledge Base and Learnings:**
 
-Step 1 — Confirm It’s Backend (Not Nginx)
+Step 1 — Confirm If any issues with Backend (Not Nginx)
 
 SSH into Backend EC2 and run:
 
 **Backend**
 
-curl -X POST http://localhost:8000/users \
--H "Content-Type: application/json" \
--d '{"name":"test","email":"test@test.com"}'
+##BASH
+iNSERT record to your RDS Database and see if this get added
 
-If this also returns 500 → backend problem confirmed.
+curl -X POST http://localhost:8000/users -H "Content-Type: application/json" -d '{"name":"test","email":"test@test.com"}'
 
+If the above command retursn 500 → backend problem is confirmed not nginx.
+
+To display all records from database or newly inserted record from above.
+
+#Bash - Run
 
 curl http://localhost:8000/users
 
+
+To kill 8000 listening port
+
+#BASH
 sudo fuser -k 8000/tcp
+
+##Re-Run Gunicorn
 
 gunicorn -w 4 -b 0.0.0.0:8000 app:app
 
-telnet RDS-ENDPOINT 3306
+###Telnet RDS
 
+telnet RDS-ENDPOINT 3306
 
 
 =========================================
