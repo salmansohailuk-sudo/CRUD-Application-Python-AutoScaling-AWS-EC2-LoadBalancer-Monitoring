@@ -221,7 +221,9 @@ http://ALB-DNS
 Any issues, see below Knowledge Base and Trouble Shooting Steps:
 
 
-**Knowledge Base and Trouble Shooting Steps:**
+🚀 Knowledge Base and Trouble Shooting Steps:
+=================================
+
 
 **Backend**
 
@@ -261,11 +263,13 @@ telnet RDS-ENDPOINT 3306
 
 ====================End TroubleShooting.....
 
-Future Enhancements
+
+🚀 Future Enhancements IN progress:
+=================================
+
+Auto Scalling
 
 Monitoring will be added.
-
-Enhancements:
 
 Objectives:
 Explore Montioring with Anil Jadhav
