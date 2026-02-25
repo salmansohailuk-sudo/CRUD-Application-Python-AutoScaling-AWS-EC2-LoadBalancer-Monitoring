@@ -1,6 +1,10 @@
 🚀 Flask + MySQL User API
 
-🚀 BACKEND INSTALLATION sudo yum update -y sudo yum install python3 -y pip3 install flask pymysql gunicorn
+🚀 BACKEND INSTALLATION sudo yum update -y 
+sudo yum update -y
+sudo yum install python3-pip -y or sudo yum install python3 python3-pip -y
+pip3 install flask pymysql gunicorn
+
 
 📁 Project Structure
 app/
