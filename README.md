@@ -61,76 +61,6 @@ STEP 2 — Create Subnets
 
 10.0.6.0/24
 
-STEP 3 — Internet Gateway
-
-Create  DEV-IG
-
-Attach to VPC
-
-**Public route table:**
-Public-rt
-
-0.0.0.0/0 → IGW
-
-Associate to public subnets.
-
-STEP 4 — NAT Gateway
-
-
-Create NAT in public subnet
-
-Private route table:
-
-0.0.0.0/0 → NAT
-
-Associate to all private subnets.  no rds ssubnets
-
-**PART 2 — SECURITY GROUPS**
-
-**Create SG-ALB**
-
-Inbound:
-
-80 → 0.0.0.0/0
-
-**SG-Bastion**
-
-Inbound:
-
-22 → Your IP only
-
-**SG-Frontend**
-
-Inbound:
-
-80 → SG-ALB
-
-22 → SG-Bastion
-
-**SG-Backend**
-
-Inbound:
-
-8000 → SG-Frontend
-
-22 → SG-Bastion
-
-**SG-RDS**
-
-Inbound:
-
-3306 → SG-Backend
-
-**PART 3 — RDS SETUP**
-
-Amazon Relational Database Service
-
-Engine: MySQL
-
-Public access: NO
-
-Subnet group: DB private subnets
-
 **PART 4 — BASTION HOST (Public)**
 
 Launch EC2:
@@ -147,7 +77,6 @@ PART 5 — BACKEND EC2 (Private)
 
 **Create EC2 Backend Server**
 
-Attached SG-Backend**
 Private subnet 10.0.4.0/24
 
 No public IP
@@ -205,8 +134,6 @@ Port 80
 **ALB Internet-facing**
 
 Attach to Public subnets x 2
-
-Attach SG-ALB
 
 Target group → Frontend EC2
 
