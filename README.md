@@ -74,7 +74,6 @@ Associate to public subnets.
 
 STEP 4 — NAT Gateway
 
-Create Elastic IP
 
 Create NAT in public subnet
 
@@ -82,22 +81,23 @@ Private route table:
 
 0.0.0.0/0 → NAT
 
-Associate to all private subnets.
+Associate to all private subnets.  no rds ssubnets
 
-PART 2 — SECURITY GROUPS
-SG-ALB
+**PART 2 — SECURITY GROUPS**
+
+**Create SG-ALB**
 
 Inbound:
 
 80 → 0.0.0.0/0
 
-SG-Bastion
+**SG-Bastion**
 
 Inbound:
 
 22 → Your IP only
 
-SG-Frontend
+**SG-Frontend**
 
 Inbound:
 
@@ -105,7 +105,7 @@ Inbound:
 
 22 → SG-Bastion
 
-SG-Backend
+**SG-Backend**
 
 Inbound:
 
@@ -113,15 +113,13 @@ Inbound:
 
 22 → SG-Bastion
 
-SG-RDS
+**SG-RDS**
 
 Inbound:
 
 3306 → SG-Backend
 
-PART 3 — RDS SETUP
-
-In:
+**PART 3 — RDS SETUP**
 
 Amazon Relational Database Service
 
@@ -131,9 +129,35 @@ Public access: NO
 
 Subnet group: DB private subnets
 
+**PART 4 — BASTION HOST (Public)**
+
+Launch EC2:
+Public subnet
+
+Attach SG-Bastion
+
+Enable public IP
+
+SSH:
+
+ssh -i key.pem ec2-user@<bastion-public-ip>
+PART 5 — BACKEND EC2 (Private)
+
+**Create EC2 Backend Server**
+
+Attached SG-Backend**
+Private subnet 10.0.4.0/24
+
+No public IP
+
+ssh -i key.pem ec2-user@<backendServer-ip>
+
+Install
+
 yum install mariadb106 -y
 mysql -h database-2.ca3m82g209lz.us-east-1.rds.amazonaws.com -u admin -pCloud123
 
+**Inside Mysql**
 
 CREATE DATABASE testdb;
 
@@ -146,36 +170,9 @@ CREATE TABLE users (
 );
 
 
-Attach SG-RDS
-
+**Create RDS DATABASE**
+**Attach SG-RDS**
 After creation, note endpoint.
-
-PART 4 — BASTION HOST (Public)
-
-Launch EC2:
-
-Public subnet
-
-Attach SG-Bastion
-
-Enable public IP
-
-SSH:
-
-ssh -i key.pem ec2-user@<bastion-public-ip>
-PART 5 — BACKEND EC2 (Private)
-
-Launch EC2:
-
-Private subnet 10.0.4.0/24
-
-No public IP
-
-Attach SG-Backend
-
-SSH via Bastion:
-
-ssh ec2-user@<backend-private-ip>
 
 
 =================================
