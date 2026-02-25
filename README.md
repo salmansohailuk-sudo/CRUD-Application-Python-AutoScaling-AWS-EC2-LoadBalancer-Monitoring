@@ -172,16 +172,16 @@ SSH via Bastion:
 ssh ec2-user@<backend-private-ip>
 
 
-==========================================================================
+=================================
 Backend Installation Instrucitons
 
 OpenCheck Backend file 
-=============================================================
+=================================
 
 Frontend Installation Instrucitons
 
 OpenCheck Frontend file 
-=============================================================
+=================================
 
 
 
