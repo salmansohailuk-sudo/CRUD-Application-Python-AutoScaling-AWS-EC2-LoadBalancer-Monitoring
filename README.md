@@ -2,6 +2,8 @@
 
 # CRUD-Application-Python-AutoScaling-AWS-EC2-LoadBalancer-Monitoring
 
+**Any issues, see below Knowledge Base and Trouble Shooting Steps or contact me eMail: salmansohailuk@gmail.com Mobile Uk + 447356261997.**
+
 a production-grade Flask CRUD application on EC2 instances behind an Application Load Balancer. The app runs with Gunicorn, Nginx acts as a reverse proxy, RDS 
 
 MySQL stores persistent data, and Auto Scaling ensures high availability and scalability.
