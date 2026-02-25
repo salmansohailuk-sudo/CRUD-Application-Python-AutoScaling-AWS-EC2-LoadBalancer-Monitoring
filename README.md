@@ -272,7 +272,7 @@ Auto Scalling
 Monitoring will be added.
 
 Objectives:
-Explore Montioring with Anil Jadhav
+Explore Montioring 
 
 Splunk - Sales Effects - No of hits - no of successfull sales/registration no of failed or pending - payments how many comes and why this is failed. (Anil)
 Grafana
