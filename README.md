@@ -180,7 +180,7 @@ OpenCheck Backend file
 
 Frontend Installation Instrucitons
 
-OpenCheck Backend file 
+OpenCheck Frontend file 
 =============================================================
 
 
