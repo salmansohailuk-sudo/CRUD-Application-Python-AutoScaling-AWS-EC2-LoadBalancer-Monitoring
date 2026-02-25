@@ -189,16 +189,20 @@ OpenCheck Frontend file
 =================================
 
 
-
-🚀 PART 7 — CREATE ALB
-
-In:
+🚀 Create ALB and Target Group
+=================================
 
 👉 Elastic Load Balancing
 
-Internet-facing
+Target group → Frontend EC2
 
-Public subnets
+Health check path: /
+
+Port 80
+
+**ALB Internet-facing**
+
+Attach to Public subnets x 2
 
 Attach SG-ALB
 
@@ -206,18 +210,15 @@ Target group → Frontend EC2
 
 Health check path: /
 
-🚀 FINAL TEST
+Port 80
 
-Open:
+🚀 FINAL TEST - Open your Web Browser
+=================================
+
 
 http://ALB-DNS
 
-Now:
-
-Browser → ALB → Frontend → Nginx /api → Backend → RDS
-
-No private IP exposed.
-
+Any issues, see below Knowledge Base and Trouble Shooting Steps:
 
 
 **Knowledge Base and Trouble Shooting Steps:**
