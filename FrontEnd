@@ -4,7 +4,7 @@
 
 Launch EC2:
 
-Private subnet 10.0.0/24
+Private subnet 10.0.3.0/24
 
 Attach SG-Frontend
 
