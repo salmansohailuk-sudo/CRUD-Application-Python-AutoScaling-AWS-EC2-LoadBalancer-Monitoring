@@ -22,7 +22,7 @@ vi app.py
 
 
 ##🧩 BACKEND CODE - Copy and paste in app.py file and Replace RDS endpoint.
-
+===============
 from flask import Flask, request, jsonify
 import pymysql
 import os
@@ -121,9 +121,12 @@ def delete_user(id):
 if __name__ == "__main__":
     app.run(debug=True)
 
+#######======================================
 
 Database Schema
+
 Install Mariadb
+
 sudo yum install mariadb105-server -y
 
 Connect to RDS Database
