@@ -173,6 +173,8 @@ ssh ec2-user@<backend-private-ip>
 
 
 =================================
+
+
 Backend Installation Instrucitons
 
 OpenCheck Backend file 
@@ -221,6 +223,7 @@ Step 1 — Confirm It’s Backend (Not Nginx)
 SSH into Backend EC2 and run:
 
 **Backend**
+
 curl -X POST http://localhost:8000/users \
 -H "Content-Type: application/json" \
 -d '{"name":"test","email":"test@test.com"}'
@@ -231,7 +234,9 @@ If this also returns 500 → backend problem confirmed.
 curl http://localhost:8000/users
 
 sudo fuser -k 8000/tcp
+
 gunicorn -w 4 -b 0.0.0.0:8000 app:app
+
 telnet RDS-ENDPOINT 3306
 
 
@@ -239,6 +244,7 @@ telnet RDS-ENDPOINT 3306
 =========================================
 
 Future Enhancements
+
 Monitoring will be added.
 
 Enhancements:
