@@ -216,7 +216,7 @@ Browser → ALB → Frontend → Nginx /api → Backend → RDS
 No private IP exposed.
 
 
-**Knowledge Base and Learnings:**
+**Knowledge Base and Trouble Shooting Steps:  **
 
 Step 1 — Confirm If any issues with Backend (Not Nginx)
 
@@ -225,7 +225,8 @@ SSH into Backend EC2 and run:
 **Backend**
 
 ##BASH
-iNSERT record to your RDS Database and see if this get added
+
+INSERT record to your RDS Database and see if this get added
 
 curl -X POST http://localhost:8000/users -H "Content-Type: application/json" -d '{"name":"test","email":"test@test.com"}'
 
@@ -241,6 +242,7 @@ curl http://localhost:8000/users
 To kill 8000 listening port
 
 #BASH
+
 sudo fuser -k 8000/tcp
 
 ##Re-Run Gunicorn
