@@ -14,8 +14,8 @@ Traffic Flow
 
 User
 → ALB (Public Subnet)
-→ Frontend EC2 (Private Subnet, Nginx)
-→ Backend EC2 (Private Subnet, Gunicorn)
+→ Frontend Create EC2 Frontend-EC2  (Private Subnet, Nginx)
+→ Backend Create EC2 Backend-EC2 (Private Subnet, Gunicorn)
 → RDS (Private Subnet)
 
 Admin
@@ -38,20 +38,22 @@ STEP 1 — Create VPC
 CIDR:
 
 10.0.0.0/16
+
 STEP 2 — Create Subnets
-Public Subnets
+
+**Create Public Subnets x 2**
 
 10.0.1.0/24 (ALB + Bastion)
 
 10.0.2.0/24 (ALB HA)
 
-Private App Subnets
+**Private App Subnets**
 
 10.0.3.0/24 (Frontend)
 
 10.0.4.0/24 (Backend)
 
-Private DB Subnets
+**Private RDS-Subnets x 2**
 
 10.0.5.0/24
 
@@ -59,8 +61,12 @@ Private DB Subnets
 
 STEP 3 — Internet Gateway
 
-Attach IGW to VPC
-Public route table:
+Create  DEV-IG
+
+Attach to VPC
+
+**Public route table:**
+Public-rt
 
 0.0.0.0/0 → IGW
 
