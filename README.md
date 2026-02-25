@@ -1,6 +1,7 @@
 
 
-<img width="937" height="720" alt="aws_architecture" src="https://github.com/user-attachments/assets/3c6d028f-9156-4e41-8b3e-45894c668a27" />
+<img width="1067" height="699" alt="0_PmFO57vSjFlmCNsX" src="https://github.com/user-attachments/assets/dc5c8497-e68a-4926-ae36-4466bae94482" />
+
 
 # CRUD-Application-Python-AutoScaling-AWS-EC2-LoadBalancer-Monitoring
 
