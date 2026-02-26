@@ -3,8 +3,8 @@
 🚀 BACKEND INSTALLATION 
 
 ---
-
-# [1] Inline Code
+# 1 Inline Code
+---
 
 sudo yum update -y
 
