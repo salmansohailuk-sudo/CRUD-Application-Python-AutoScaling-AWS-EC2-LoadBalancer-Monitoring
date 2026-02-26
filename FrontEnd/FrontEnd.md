@@ -4,7 +4,7 @@ This guide walks you through launching your frontend EC2 instance, installing Ng
 
 ---
 
-## 1️⃣ Launch Frontend EC2
+## 1 Launch Frontend EC2
 ---
 
 <summary>1️⃣ Launch Frontend EC2 🔑</summary>
@@ -22,17 +22,27 @@ ssh -i your-key.pem ec2-user@frontend-ec2-private-ip
 ## 2️⃣ Install Nginx
 
 ```bash
+
 sudo yum install nginx -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
 
+## Create index.html file
+
 sudo vi /usr/share/nginx/html/index.html
+
+---
+
+## 2️⃣ Setup Reverse Proxy
+---
 
 sudo vi /etc/nginx/conf.d/app.conf
 
 
-sudo nginx -t            # Test Nginx config
+sudo nginx -t            
+
+# Test Nginx config
 sudo systemctl restart nginx
 sudo systemctl reload nginx
 
