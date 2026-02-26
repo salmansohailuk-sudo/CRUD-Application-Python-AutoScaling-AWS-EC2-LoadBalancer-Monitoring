@@ -1,29 +1,39 @@
-****Front End**
+# 🚀 Part 6 — Frontend EC2 (Private)
 
-🚀 PART 6 — FRONTEND EC2 (Private)
+This guide walks you through launching your frontend EC2 instance, installing Nginx, creating frontend files, setting up a reverse proxy, and restarting Nginx.
 
-Launch Front End EC2:
+---
 
-SSH via Bastion AND connect to FRONT END SERVER.
+## 1️⃣ Launch Frontend EC2
+---
 
-Install Nginx:
+<summary>1️⃣ Launch Frontend EC2 🔑</summary>
 
+- SSH via Bastion and connect to the **Frontend Server**.
+
+```bash
+## Example:
+ssh -i your-key.pem ec2-user@bastion-host
+ssh -i your-key.pem ec2-user@frontend-ec2-private-ip
+
+
+---
+
+## 2️⃣ Install Nginx
+
+```bash
 sudo yum install nginx -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
-🚀 FRONTEND FILE
 
 sudo vi /usr/share/nginx/html/index.html
 
-Front EC2 
-#BASH 
-
-🚀 ADD REVERSE PROXY
 sudo vi /etc/nginx/conf.d/app.conf
 
-Final Step - Restart:
 
-sudo nginx -t
+sudo nginx -t            # Test Nginx config
 sudo systemctl restart nginx
 sudo systemctl reload nginx
+
+
