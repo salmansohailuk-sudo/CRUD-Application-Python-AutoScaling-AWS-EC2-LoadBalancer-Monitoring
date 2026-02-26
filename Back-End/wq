@@ -142,6 +142,8 @@ def delete_user(id):
     return {"message": "User deleted successfully"}
 ```
 
+**Request:**  
+`DELETE /users/1`
 
 
 ---
