@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Salman Sohail">
+  <meta name="description" content="DevOps Engineer and Founder building scalable cloud infrastructure.">
+  
+  <!-- Open Graph (for social sharing) -->
+  <meta property="og:author" content="Salman Sohail">
+  
+  <!-- Structured Data (Recommended Modern SEO Method) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://zazconsult.com",
+    "@type": "Person",
+    "name": "Salman Sohail",
+    "jobTitle": "DevOps Engineer & Founder",
+    "url": "https://zazconsult.com",
+    "sameAs": [
+      "https://github.com/salmansohailuk-sudo",
+      "https://www.linkedin.com/in/salmansayeed/"
+    ]
+  }
+  </script>
+
+<title>Advanced CRUD Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+body.dark {
+    background:#121212;
+    color:white;
+}
+body.dark .card {
+    background:#1e1e1e;
+    color:white;
+}
+.card { border-radius:15px; }
+</style>
+</head>
+<body>
+
+<div class="container py-5">
+
+<div class="d-flex justify-content-between mb-4">
+    <h2>User Dashboard</h2>
+    <button class="btn btn-outline-dark" onclick="toggleDark()">🌙</button>
+</div>
+
+<!-- Add User -->
+<div class="card p-4 shadow mb-4">
+<div class="row g-3">
+<div class="col-md-4">
+<input id="name" class="form-control" placeholder="Name">
+</div>
+<div class="col-md-4">
+<input id="email" class="form-control" placeholder="Email">
+</div>
+<div class="col-md-4 d-grid">
+<button class="btn btn-primary" onclick="add()">Add User</button>
+</div>
+</div>
+</div>
+
+<!-- Search -->
+<div class="mb-3">
+<input id="search" class="form-control" placeholder="Search..." onkeyup="displayUsers()">
+</div>
+
+<!-- User List -->
+<div class="card p-4 shadow mb-4">
+<ul id="list" class="list-group"></ul>
+
+<nav class="mt-3">
+<ul class="pagination justify-content-center" id="pagination"></ul>
+</nav>
+</div>
+
+<!-- Chart -->
+<div class="card p-4 shadow mb-4">
+<h5>User Stats</h5>
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="editModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Update User</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<input type="hidden" id="editId">
+<input id="editName" class="form-control mb-3" placeholder="Name">
+<input id="editEmail" class="form-control" placeholder="Email">
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+<button class="btn btn-success" onclick="update()">Save</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3">
+<div id="toast" class="toast align-items-center text-white bg-success border-0">
+<div class="d-flex">
+<div class="toast-body" id="toastMsg"></div>
+<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+</div>
+</div>
+</div>
+
+<script>
+const API="/api";
+let users=[];
+let currentPage=1;
+const rows=5;
+let chart;
+
+// Load
+async function load(){
+let r=await fetch(API+"/users");
+users=await r.json();
+displayUsers();
+paginate();
+updateChart();
+}
+
+// Display
+function displayUsers(){
+let list=document.getElementById("list");
+let search=document.getElementById("search").value.toLowerCase();
+list.innerHTML="";
+
+let filtered=users.filter(u=>
+u.name.toLowerCase().includes(search) ||
+u.email.toLowerCase().includes(search)
+);
+
+let start=(currentPage-1)*rows;
+let pageData=filtered.slice(start,start+rows);
+
+pageData.forEach(u=>{
+list.innerHTML+=`
+<li class="list-group-item d-flex justify-content-between align-items-center">
+<div>
+<strong>${u.name}</strong><br>
+<small>${u.email}</small>
+</div>
+<div>
+<button class="btn btn-sm btn-warning me-2" onclick="openEdit(${u.id},'${u.name}','${u.email}')">Edit</button>
+<button class="btn btn-sm btn-danger" onclick="del(${u.id})">Delete</button>
+</div>
+</li>`;
+});
+}
+
+// Pagination
+function paginate(){
+let pageCount=Math.ceil(users.length/rows);
+let p=document.getElementById("pagination");
+p.innerHTML="";
+for(let i=1;i<=pageCount;i++){
+p.innerHTML+=`<li class="page-item ${i===currentPage?'active':''}">
+<button class="page-link" onclick="changePage(${i})">${i}</button></li>`;
+}
+}
+function changePage(p){currentPage=p;displayUsers();paginate();}
+
+// Add
+async function add(){
+let name=nameInput("name");
+let email=nameInput("email");
+if(!name||!email)return showToast("Fill all fields","bg-danger");
+
+await fetch(API+"/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email})});
+clearInputs();
+showToast("User added","bg-success");
+load();
+}
+
+// Delete
+async function del(id){
+await fetch(API+"/users/"+id,{method:"DELETE"});
+showToast("User deleted","bg-danger");
+load();
+}
+
+// Open Edit
+function openEdit(id,name,email){
+document.getElementById("editId").value=id;
+document.getElementById("editName").value=name;
+document.getElementById("editEmail").value=email;
+new bootstrap.Modal(document.getElementById("editModal")).show();
+}
+
+// Update
+async function update(){
+let id=document.getElementById("editId").value;
+let name=document.getElementById("editName").value;
+let email=document.getElementById("editEmail").value;
+
+await fetch(API+"/users/"+id,{
+method:"PUT",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({name,email})
+});
+showToast("User updated","bg-info");
+load();
+bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
+}
+
+// Chart
+function updateChart(){
+if(chart)chart.destroy();
+chart=new Chart(document.getElementById("chart"),{
+type:"doughnut",
+data:{labels:["Users"],datasets:[{data:[users.length],backgroundColor:["#0d6efd"]}]}
+});
+}
+
+// Helpers
+function nameInput(id){return document.getElementById(id).value.trim();}
+function clearInputs(){document.getElementById("name").value="";document.getElementById("email").value="";}
+function toggleDark(){document.body.classList.toggle("dark");}
+function showToast(msg,color){
+let t=document.getElementById("toast");
+t.className="toast align-items-center text-white "+color+" border-0";
+document.getElementById("toastMsg").innerText=msg;
+new bootstrap.Toast(t).show();
+}
+
+load();
+</script>
+</body>
+</html>
