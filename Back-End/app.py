@@ -1,70 +1,76 @@
-## Author: Sayed Salman Sohail (Salman Sayeed), Devops Consultant
-## M.Sc Computer Science (Derby University - United Kingdom)
-## Purpose Simply Backend with Python
-## Project CRUD Functionality
+# 🐍 Flask + MySQL CRUD User API
 
-from flask import Flask, request, jsonify
-import pymysql
-import os
+A simple **backend API** built with **Flask** and **MySQL** for managing users.  
+Designed for learning, quick prototyping, and small-scale projects.
 
-app = Flask(__name__)
+---
 
-# -------------------------------
-# Database Connection Function
-# -------------------------------
-def get_db_connection():
-    return pymysql.connect(
-        host="YOUR RDS ENDPOINT REPLACE",
-        user="admin",
-        password="Cloud123",
-        database="testdb",
-        cursorclass=pymysql.cursors.DictCursor,
-        autocommit=True
-    )
-# -------------------------------
-# Update Users
-# -------------------------------
+## 👤 Author
 
+**Sayed Salman Sohail (Salman Sayeed)** – DevOps Consultant  
+**M.Sc Computer Science** – Derby University, United Kingdom  
 
-@app.route("/users/<int:id>", methods=["PUT"])
-def update_user(id):
-    data = request.get_json()
-    name = data.get("name")
-    email = data.get("email")
+---
 
-    conn = get_db_connection()
-    cur = conn.cursor()
+## 🎯 Purpose
 
-    cur.execute(
-        "UPDATE users SET name=%s, email=%s WHERE id=%s",
-        (name, email, id)
-    )
+- Build a **simple backend API** using Python and Flask  
+- Perform **CRUD operations** for user data  
+- Connect and interact with a **MySQL database** (RDS/Cloud)
 
-    conn.close()
-    return {"message": "User updated"}
+---
 
+## 📁 Project Structure
 
-# -------------------------------
-# GET All Users
-# -------------------------------
+```
+app.py       # Main Flask application
+```
+
+---
+
+## ⚙️ Requirements
+
+- Python 3.x  
+- Flask  
+- PyMySQL  
+- MySQL / RDS instance  
+
+Install dependencies:
+
+```bash
+pip3 install flask pymysql
+```
+
+---
+
+## 🛠 API Endpoints
+
+### 1️⃣ Get All Users
+
+```python
 @app.route("/users", methods=["GET"])
 def get_users():
     conn = get_db_connection()
     cur = conn.cursor()
-
     cur.execute("SELECT * FROM users")
     data = cur.fetchall()
-
     conn.close()
     return jsonify(data)
+```
 
-# -------------------------------
-# POST Add User
-# -------------------------------
+**Request:**  
+`GET /users`  
+
+**Response:** JSON array of users
+
+---
+
+### 2️⃣ Add a New User
+
+```python
 @app.route("/users", methods=["POST"])
 def add_user():
     data = request.get_json()
-
     name = data.get("name")
     email = data.get("email")
 
@@ -73,31 +79,93 @@ def add_user():
 
     conn = get_db_connection()
     cur = conn.cursor()
-
     cur.execute(
         "INSERT INTO users (name, email) VALUES (%s, %s)",
         (name, email)
     )
-
     conn.close()
     return {"message": "User added successfully"}, 201
+```
 
-# -------------------------------
-# DELETE User
-# -------------------------------
+**Request:**  
+`POST /users`  
+Body JSON:  
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+---
+
+### 3️⃣ Update User
+
+```python
+@app.route("/users/<int:id>", methods=["PUT"])
+def update_user(id):
+    data = request.get_json()
+    name = data.get("name")
+    email = data.get("email")
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "UPDATE users SET name=%s, email=%s WHERE id=%s",
+        (name, email, id)
+    )
+    conn.close()
+    return {"message": "User updated"}
+```
+
+**Request:**  
+`PUT /users/1`  
+Body JSON:  
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com"
+}
+```
+
+---
+
+### 4️⃣ Delete User
+
+```python
 @app.route("/users/<int:id>", methods=["DELETE"])
 def delete_user(id):
     conn = get_db_connection()
     cur = conn.cursor()
-
     cur.execute("DELETE FROM users WHERE id=%s", (id,))
     conn.close()
-
     return {"message": "User deleted successfully"}
+```
 
-# -------------------------------
-# Run App
-# -------------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
+**Request:**  
+`DELETE /users/1`
 
+---
+
+## ⚡ Run Application
+
+```bash
+python3 app.py
+```
+
+**Or using Gunicorn (production-ready):**
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:8000 app:app
+```
+
+- `-w 4` → 4 workers  
+- `-b 0.0.0.0:8000` → listen on port 8000
+
+---
+
+## 📝 Notes
+
+- Replace `YOUR RDS ENDPOINT REPLACE` with your MySQL connection endpoint  
+- Ensure MySQL database `testdb` exists and `users` table is created  
+- For production, secure credentials and use environment variables
