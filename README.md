@@ -1,6 +1,6 @@
 
 
-# CRUD-Application-Python-AWS-EC2-LoadBalancer-Monitoring
+# CRUD-Application-Python-AWS-EC2-LoadBalancer
 
 # Monitoring and Auto-Scalling to follow
 
