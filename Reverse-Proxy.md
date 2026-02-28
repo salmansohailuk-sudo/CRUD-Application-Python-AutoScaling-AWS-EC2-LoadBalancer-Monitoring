@@ -1,3 +1,5 @@
+#  Reverse Proxy Explanation
+
 What Is a Reverse NGINX Proxy?
 
 A reverse proxy is a server that sits in front of one or more backend servers and forwards client requests to them.
