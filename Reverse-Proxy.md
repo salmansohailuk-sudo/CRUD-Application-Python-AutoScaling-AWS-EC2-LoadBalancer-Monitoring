@@ -1,4 +1,6 @@
-#Reverse Proxy Explanation -  Test
+#Reverse Proxy Explanation -  
+
+Test
 
 What Is a Reverse NGINX Proxy?
 
